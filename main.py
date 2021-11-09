@@ -71,8 +71,8 @@ def game():
 
         user_score = calculate_score(user_cards)
 
-    while computer_score < 17:
-
+    while computer_score < 17:              # The computer's game strategy is that it only draws cards
+                                            # if the sum of its cards is less than 17
         computer_cards.append(draw_card())
         computer_score = calculate_score(computer_cards)
 
