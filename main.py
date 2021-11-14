@@ -1,8 +1,26 @@
 import random
-from art import logo
 from help import rules
 
-CARDS = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+CARDS = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K']
+LOGO_NAME = "BLACKJACK"
+LOGO_LETTERS = []
+for LETTER in LOGO_NAME:
+    LOGO_LETTERS.append(LETTER)
+
+
+def print_cards(list_of_cards):
+
+    to_print = []
+    for card in list_of_cards:
+        if card == 10:
+            to_print.append(f"|{card}  | ")
+        else:
+            to_print.append(f"|{card}   | ")
+    nr = len(list_of_cards)
+    print(nr * " ____  ")
+    print("".join(to_print))
+    print(nr * "| %$ | ")
+    print(nr * "|____| ")
 
 
 def draw_card():
@@ -12,15 +30,21 @@ def draw_card():
 
 def calculate_score(list_of_cards):
 
-    score = sum(list_of_cards)
+    list_of_values = list_of_cards.copy()
+    for i in range(len(list_of_values)):
+        if list_of_values[i] == 'A':
+            list_of_values[i] = 11
+        elif list_of_values[i] == 'J' or 'Q' or 'K':
+            list_of_values[i] = 10
+
+    score = sum(list_of_values)
     if score == 21:
         return score
-    for card in list_of_cards:
-        if card == 11:
+    for i in range(len(list_of_values)):
+        if list_of_values[i] == 11:
             if score > 21:
-                list_of_cards.remove(11)
-                list_of_cards.append(1)
-                score = sum(list_of_cards)
+                list_of_values[i] = 1
+                score = sum(list_of_values)
     return score
 
 
@@ -54,7 +78,8 @@ def game():
         user_cards.append(draw_card())
         computer_cards.append(draw_card())
 
-    print(f"\nYour cards values: {user_cards}")
+    print("Your cards:")
+    print_cards(user_cards)
 
     user_score = calculate_score(user_cards)
     computer_score = calculate_score(computer_cards)
@@ -65,7 +90,8 @@ def game():
 
         if wanna_draw == 'y':
             user_cards.append(draw_card())
-            print(f"Your cards values: {user_cards}")
+            print("Your cards:")
+            print_cards(user_cards)
         else:
             user_drawing = False
 
@@ -77,21 +103,24 @@ def game():
         computer_score = calculate_score(computer_cards)
 
     choose_winner(user_score, computer_score)
-    print(f"Computer cards values: {computer_cards}:")
+    print("Computer cards:")
+    print_cards(computer_cards)
 
     wanna_play_again = input("\nWanna play again? If yes type 'y', if not type n: ")
     if wanna_play_again == 'y':
         game()
 
 
-print(logo)
+print_cards(LOGO_LETTERS)
 
-user_choice_1 = input("Welcome to BlackJack Game."
-                      "\nIf you want to read about the rules, type 'help'."
-                      "If you are ready to play the game, type 'y': ")
+user_choice_1 = input("\nWelcome to BlackJack Game!"
+                      "\nIf you want to read about the rules, type 'help'. "
+                      "\nIf you are ready to play the game, type 'y': "
+                      "\nYour choice: ")
+
 if user_choice_1 == 'help':
     print(rules)
-    user_choice_2 = input("We start? If yes type 'y': ")
+    user_choice_2 = input("Can we start? If yes type 'y': ")
     if user_choice_2 == 'y':
         game()
 elif user_choice_1 == 'y':

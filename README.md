@@ -1,2 +1,2 @@
-This is a blackjack game written in Python version 3.9. Owner of this code is 'robxyz567@gmail.com'.
-Logo was generated with 'patorjk.com'.
+This is a blackjack game written in Python version 3.9. 
+Owner of this code is 'robxyz567@gmail.com'.
